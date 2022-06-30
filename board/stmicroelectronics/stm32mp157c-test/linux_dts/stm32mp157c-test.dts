@@ -99,3 +99,5 @@
 	pinctrl-2 = <&usart2_idle_pins_c>;
 	status = "disabled";
 };
+
+//123
