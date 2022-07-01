@@ -243,6 +243,7 @@
 	status = "okay";
 	/delete-property/dmas;
 	/delete-property/dma-names;
+
 };
 
 &i2c4 {
@@ -667,10 +668,10 @@
 
 &uart7 {
 	pinctrl-names = "default", "sleep", "idle";
-	pinctrl-0 = <&uart7_pins_c>;
-	pinctrl-1 = <&uart7_sleep_pins_c>;
-	pinctrl-2 = <&uart7_idle_pins_c>;
-	status = "disabled";
+	pinctrl-0 = <&uart7_pins_d>;
+	pinctrl-1 = <&uart7_sleep_pins_d>;
+	pinctrl-2 = <&uart7_idle_pins_d>;
+	status = "okay";
 };
 
 &usart3 {
