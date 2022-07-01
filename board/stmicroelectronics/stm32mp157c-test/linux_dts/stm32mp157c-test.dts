@@ -13,20 +13,20 @@
 #include "stm32mp15xx-dkx.dtsi"
 
 / {
-	model = "STMicroelectronics STM32MP157C-DK2 Discovery Board";
+	model = "Video Board";
 	compatible = "st,stm32mp157c-dk2", "st,stm32mp157";
 
 	aliases {
 		//fen-
-		ethernet0 = &ethernet0;
+//		ethernet0 = &ethernet0;
 		//fen+
 		serial0 = &uart4;
 		//fen-
-		serial1 = &usart3;
+//		serial1 = &usart3;
 		//fen+
 		serial2 = &uart7;
 		//fen-
-		serial3 = &usart2;
+//		serial3 = &usart2;
 	};
 
 	chosen {
