@@ -574,6 +574,7 @@
 		};
 	};
 
+	//fen+
 	ltdc_pins_a: ltdc-0 {
 		pins {
 			pinmux = <STM32_PINMUX('G',  7, AF14)>, /* LCD_CLK */
@@ -610,6 +611,7 @@
 		};
 	};
 
+	//fen+
 	ltdc_sleep_pins_a: ltdc-sleep-0 {
 		pins {
 			pinmux = <STM32_PINMUX('G',  7, ANALOG)>, /* LCD_CLK */
@@ -643,6 +645,7 @@
 		};
 	};
 
+	//fen-
 	ltdc_pins_b: ltdc-1 {
 		pins {
 			pinmux = <STM32_PINMUX('I', 14, AF14)>, /* LCD_CLK */
@@ -679,6 +682,7 @@
 		};
 	};
 
+	//fen-
 	ltdc_sleep_pins_b: ltdc-sleep-1 {
 		pins {
 			pinmux = <STM32_PINMUX('I', 14, ANALOG)>, /* LCD_CLK */
@@ -1263,6 +1267,7 @@
 		};
 	};
 
+	//fen+
 	sdmmc1_b4_pins_a: sdmmc1-b4-0 {
 		pins1 {
 			pinmux = <STM32_PINMUX('C', 8, AF12)>, /* SDMMC1_D0 */
@@ -1282,6 +1287,7 @@
 		};
 	};
 
+	//fen+
 	sdmmc1_b4_od_pins_a: sdmmc1-b4-od-0 {
 		pins1 {
 			pinmux = <STM32_PINMUX('C', 8, AF12)>, /* SDMMC1_D0 */
@@ -1306,6 +1312,7 @@
 		};
 	};
 
+	//fen+
 	sdmmc1_b4_init_pins_a: sdmmc1-b4-init-0 {
 		pins1 {
 			pinmux = <STM32_PINMUX('C', 8, AF12)>, /* SDMMC1_D0 */
@@ -1318,6 +1325,7 @@
 		};
 	};
 
+	//fen+
 	sdmmc1_b4_sleep_pins_a: sdmmc1-b4-sleep-0 {
 		pins {
 			pinmux = <STM32_PINMUX('C', 8, ANALOG)>, /* SDMMC1_D0 */
