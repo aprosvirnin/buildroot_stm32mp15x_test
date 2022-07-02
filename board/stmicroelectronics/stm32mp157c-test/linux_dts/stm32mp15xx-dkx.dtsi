@@ -70,17 +70,6 @@
 		};
 	};
 
-	sound {
-		compatible = "audio-graph-card";
-		label = "STM32MP1-DK";
-		routing =
-			"Playback" , "MCLK",
-			"Capture" , "MCLK",
-			"MICL" , "Mic Bias";
-		dais = <&sai2a_port &sai2b_port &i2s2_port>;
-		status = "okay";
-	};
-
 	vin: vin {
 		compatible = "regulator-fixed";
 		regulator-name = "vin";
@@ -149,37 +138,6 @@
 	status = "okay";
 	/delete-property/dmas;
 	/delete-property/dma-names;
-
-	hdmi-transmitter@39 {
-		compatible = "sil,sii9022";
-		reg = <0x39>;
-		iovcc-supply = <&v3v3_hdmi>;
-		cvcc12-supply = <&v1v2_hdmi>;
-		reset-gpios = <&gpioa 10 GPIO_ACTIVE_LOW>;
-		interrupts = <1 IRQ_TYPE_EDGE_FALLING>;
-		interrupt-parent = <&gpiog>;
-		#sound-dai-cells = <0>;
-		status = "okay";
-
-		ports {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			port@0 {
-				reg = <0>;
-				sii9022_in: endpoint {
-					remote-endpoint = <&ltdc_ep0_out>;
-				};
-			};
-
-			port@3 {
-				reg = <3>;
-				sii9022_tx_endpoint: endpoint {
-					remote-endpoint = <&i2s2_endpoint>;
-				};
-			};
-		};
-	};
 };
 
 &i2c2 {
@@ -392,7 +350,9 @@
 	port {
 		ltdc_ep0_out: endpoint@0 {
 			reg = <0>;
-			remote-endpoint = <&sii9022_in>;
+
+			//fen-D
+//			remote-endpoint = <&sii9022_in>;
 		};
 	};
 };

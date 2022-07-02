@@ -32,44 +32,6 @@
 	status = "okay";
 };
 
-&dsi {
-	status = "okay";
-	phy-dsi-supply = <&reg18>;
-
-	ports {
-		//fen-
-		port@0 {
-			reg = <0>;
-			dsi_in: endpoint {
-				remote-endpoint = <&ltdc_ep1_out>;
-			};
-		};
-
-		//fen-
-		port@1 {
-			reg = <1>;
-			dsi_out: endpoint {
-				remote-endpoint = <&panel_in>;
-			};
-		};
-	};
-
-	//fen-
-	panel@0 {
-		compatible = "orisetech,otm8009a";
-		reg = <0>;
-		reset-gpios = <&gpioe 4 GPIO_ACTIVE_LOW>;
-		power-supply = <&v3v3>;
-		status = "okay";
-
-		port {
-			panel_in: endpoint {
-				remote-endpoint = <&dsi_out>;
-			};
-		};
-	};
-};
-
 &i2c1 {
 	touchscreen@38 {
 		compatible = "focaltech,ft6236";
@@ -87,9 +49,9 @@
 	status = "okay";
 
 	port {
-		ltdc_ep1_out: endpoint@1 {
+		ltdc_ep0_out: endpoint@0 {
 			reg = <1>;
-			remote-endpoint = <&dsi_in>;
+//			remote-endpoint = <&dsi_in>;
 		};
 	};
 };
