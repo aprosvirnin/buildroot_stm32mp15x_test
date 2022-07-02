@@ -132,25 +132,6 @@
 	status = "okay";
 };
 
-&ethernet0 {
-	status = "okay";
-	pinctrl-0 = <&ethernet0_rgmii_pins_a>;
-	pinctrl-1 = <&ethernet0_rgmii_sleep_pins_a>;
-	pinctrl-names = "default", "sleep";
-	phy-mode = "rgmii-id";
-	max-speed = <1000>;
-	phy-handle = <&phy0>;
-
-	mdio0 {
-		#address-cells = <1>;
-		#size-cells = <0>;
-		compatible = "snps,dwmac-mdio";
-		phy0: ethernet-phy@0 {
-			reg = <0>;
-		};
-	};
-};
-
 &gpu {
 	contiguous-area = <&gpu_reserved>;
 };
@@ -196,39 +177,6 @@
 				sii9022_tx_endpoint: endpoint {
 					remote-endpoint = <&i2s2_endpoint>;
 				};
-			};
-		};
-	};
-
-	cs42l51: cs42l51@4a {
-		compatible = "cirrus,cs42l51";
-		reg = <0x4a>;
-		#sound-dai-cells = <0>;
-		VL-supply = <&v3v3>;
-		VD-supply = <&v1v8_audio>;
-		VA-supply = <&v1v8_audio>;
-		VAHP-supply = <&v1v8_audio>;
-		reset-gpios = <&gpiog 9 GPIO_ACTIVE_LOW>;
-		clocks = <&sai2a>;
-		clock-names = "MCLK";
-		status = "okay";
-
-		cs42l51_port: port {
-			#address-cells = <1>;
-			#size-cells = <0>;
-
-			cs42l51_tx_endpoint: endpoint@0 {
-				reg = <0>;
-				remote-endpoint = <&sai2a_endpoint>;
-				frame-master = <&cs42l51_tx_endpoint>;
-				bitclock-master = <&cs42l51_tx_endpoint>;
-			};
-
-			cs42l51_rx_endpoint: endpoint@1 {
-				reg = <1>;
-				remote-endpoint = <&sai2b_endpoint>;
-				frame-master = <&cs42l51_rx_endpoint>;
-				bitclock-master = <&cs42l51_rx_endpoint>;
 			};
 		};
 	};
@@ -426,36 +374,6 @@
 	};
 };
 
-&i2c5 {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&i2c5_pins_a>;
-	pinctrl-1 = <&i2c5_sleep_pins_a>;
-	i2c-scl-rising-time-ns = <185>;
-	i2c-scl-falling-time-ns = <20>;
-	clock-frequency = <400000>;
-	// spare dmas for other usage 
-	/delete-property/dmas;
-	/delete-property/dma-names;
-	status = "disabled";
-};
-
-&i2s2 {
-	clocks = <&rcc SPI2>, <&rcc SPI2_K>, <&rcc PLL3_Q>, <&rcc PLL3_R>;
-	clock-names = "pclk", "i2sclk", "x8k", "x11k";
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&i2s2_pins_a>;
-	pinctrl-1 = <&i2s2_sleep_pins_a>;
-	status = "okay";
-
-	i2s2_port: port {
-		i2s2_endpoint: endpoint {
-			remote-endpoint = <&sii9022_tx_endpoint>;
-			format = "i2s";
-			mclk-fs = <256>;
-		};
-	};
-};
-
 &ipcc {
 	status = "okay";
 };
@@ -500,51 +418,6 @@
 
 &rtc {
 	status = "okay";
-};
-
-&sai2 {
-	clocks = <&rcc SAI2>, <&rcc PLL3_Q>, <&rcc PLL3_R>;
-	clock-names = "pclk", "x8k", "x11k";
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&sai2a_pins_a>, <&sai2b_pins_b>;
-	pinctrl-1 = <&sai2a_sleep_pins_a>, <&sai2b_sleep_pins_b>;
-	status = "okay";
-
-	sai2a: audio-controller@4400b004 {
-		#clock-cells = <0>;
-		dma-names = "tx";
-		clocks = <&rcc SAI2_K>;
-		clock-names = "sai_ck";
-		status = "okay";
-
-		sai2a_port: port {
-			sai2a_endpoint: endpoint {
-				remote-endpoint = <&cs42l51_tx_endpoint>;
-				format = "i2s";
-				mclk-fs = <256>;
-				dai-tdm-slot-num = <2>;
-				dai-tdm-slot-width = <32>;
-			};
-		};
-	};
-
-	sai2b: audio-controller@4400b024 {
-		dma-names = "rx";
-		st,sync = <&sai2a 2>;
-		clocks = <&rcc SAI2_K>, <&sai2a>;
-		clock-names = "sai_ck", "MCLK";
-		status = "okay";
-
-		sai2b_port: port {
-			sai2b_endpoint: endpoint {
-				remote-endpoint = <&cs42l51_rx_endpoint>;
-				format = "i2s";
-				mclk-fs = <256>;
-				dai-tdm-slot-num = <2>;
-				dai-tdm-slot-width = <32>;
-			};
-		};
-	};
 };
 
 //fen+
@@ -674,15 +547,6 @@
 	status = "okay";
 };
 
-&usart3 {
-	pinctrl-names = "default", "sleep", "idle";
-	pinctrl-0 = <&usart3_pins_c>;
-	pinctrl-1 = <&usart3_sleep_pins_c>;
-	pinctrl-2 = <&usart3_idle_pins_c>;
-	uart-has-rtscts;
-	status = "disabled";
-};
-
 &usbh_ehci {
 	phys = <&usbphyc_port0>;
 	status = "okay";
@@ -736,4 +600,4 @@
 	status = "okay";
 };
 
-//1234
+//12345
