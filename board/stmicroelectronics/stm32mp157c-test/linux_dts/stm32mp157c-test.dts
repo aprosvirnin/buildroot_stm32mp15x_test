@@ -33,7 +33,9 @@
 };
 
 &i2c2 {
-	touchscreen@20 {
+	status = "okay";
+
+	touchscreen: touchscreen@20 {
 		compatible = "synaptics,synaptics_i2c";
 		reg = <0x20>;
 		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
