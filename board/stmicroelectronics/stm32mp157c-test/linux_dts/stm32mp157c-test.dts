@@ -34,7 +34,7 @@
 
 &i2c2 {
 	touchscreen@20 {
-		compatible = "synaptics";
+		compatible = "synaptics,synaptics_i2c";
 		reg = <0x20>;
 		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
 		interrupt-parent = <&gpioa>;
@@ -42,6 +42,40 @@
 		touchscreen-size-x = <1280>;
 		touchscreen-size-y = <768>;
 		status = "okay";
+	};
+
+	dsi_bridge: dsi-bridge@e {
+		compatible = "toshiba,tc358768";
+		reg = <0xe>;
+
+//		clocks = <&tc358768_refclk>;
+//		clock-names = "refclk";
+
+//		reset-gpios = <&pcf_display_board 0 GPIO_ACTIVE_LOW>;
+
+		vddc-supply = <&v1v2_hdmi>;
+		vddmipi-supply = <&v1v2_hdmi>;
+		vddio-supply = <&v3v3_hdmi>;
+
+		dsi_bridge_ports: ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@1 {
+				reg = <1>;
+				rgb_in: endpoint {
+					remote-endpoint = <&ltdc>;
+					data-lines = <24>;
+				};
+			};
+
+//			port@1 {
+//				reg = <1>;
+//				dsi_out: endpoint {
+//					remote-endpoint = <&lcd_in>;
+//				};
+//			};
+		};
 	};
 };
 
@@ -64,4 +98,4 @@
 	status = "disabled";
 };
 
-//12345
+//123456
