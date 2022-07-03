@@ -17,9 +17,7 @@
 	compatible = "st,stm32mp157c-dk2", "st,stm32mp157";
 
 	aliases {
-		//fen+
 		serial0 = &uart4;
-		//fen+
 		serial1 = &uart7;
 	};
 
