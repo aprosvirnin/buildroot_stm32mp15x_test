@@ -30,8 +30,8 @@
 	status = "okay";
 };
 
-&i2c2 {
-	status = "okay";
+&i2c4 {
+//	status = "okay";
 
 	touchscreen: touchscreen@20 {
 		compatible = "synaptics,synaptics_i2c";
@@ -80,7 +80,7 @@
 };
 
 &ltdc {
-	status = "disabled";
+	status = "okay";
 
 	port {
 		ltdc_ep0_out: endpoint@0 {
@@ -98,4 +98,4 @@
 	status = "disabled";
 };
 
-//123456
+//1234567
