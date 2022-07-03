@@ -32,15 +32,15 @@
 	status = "okay";
 };
 
-&i2c1 {
-	touchscreen@38 {
-		compatible = "focaltech,ft6236";
-		reg = <0x38>;
-		interrupts = <2 2>;
-		interrupt-parent = <&gpiof>;
+&i2c2 {
+	touchscreen@20 {
+		compatible = "synaptics";
+		reg = <0x20>;
+		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+		interrupt-parent = <&gpioa>;
 		interrupt-controller;
-		touchscreen-size-x = <480>;
-		touchscreen-size-y = <800>;
+		touchscreen-size-x = <1280>;
+		touchscreen-size-y = <768>;
 		status = "okay";
 	};
 };
@@ -64,4 +64,4 @@
 	status = "disabled";
 };
 
-//123
+//12345
