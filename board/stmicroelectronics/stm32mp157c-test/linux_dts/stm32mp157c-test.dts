@@ -46,7 +46,7 @@
 };
 
 &ltdc {
-	status = "okay";
+	status = "disabled";
 
 	port {
 		ltdc_ep0_out: endpoint@0 {
