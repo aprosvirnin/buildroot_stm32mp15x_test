@@ -30,6 +30,6 @@
 				 <STM32_PINMUX('B', 3, ANALOG)>; /* UART7_RX */
 		};
 	};
-
 };
 
+//1

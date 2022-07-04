@@ -8,7 +8,8 @@
 
 #include "stm32mp157.dtsi"
 #include "stm32mp15xc.dtsi"
-#include "stm32mp15xxac-pinctrl.dtsi"
+//#include "stm32mp15xxac-pinctrl.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
 //
 #include "stm32mp15xx-videodev-pinctrl.dtsi"
 #include "stm32mp15xx-videodev.dtsi"
@@ -91,13 +92,12 @@
 	};
 };
 
-&usart2 {
+&uart7 {
 	pinctrl-names = "default", "sleep", "idle";
-	pinctrl-0 = <&usart2_pins_d>;
-	pinctrl-1 = <&usart2_sleep_pins_d>;
-	pinctrl-2 = <&usart2_idle_pins_d>;
+	pinctrl-0 = <&uart7_pins_d>;
+	pinctrl-1 = <&uart7_sleep_pins_d>;
+	pinctrl-2 = <&uart7_idle_pins_d>;
 	status = "disabled";
 };
 
-//1234567
-
+//12345678

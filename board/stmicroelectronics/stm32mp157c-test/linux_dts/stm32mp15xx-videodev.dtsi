@@ -178,10 +178,10 @@
 			buck3-supply = <&vin>;
 			buck4-supply = <&vin>;
 			ldo1-supply = <&v3v3>;
-//			ldo2-supply = <&vin>;
+			ldo2-supply = <&vin>;
 			ldo3-supply = <&vdd_ddr>;
 			ldo4-supply = <&vin>;
-//			ldo5-supply = <&vin>;
+			ldo5-supply = <&vin>;
 			ldo6-supply = <&v3v3>;
 			vref_ddr-supply = <&vin>;
 			boost-supply = <&vin>;
@@ -297,7 +297,7 @@
 			interrupts = <IT_PONKEY_F 0>, <IT_PONKEY_R 0>;
 			interrupt-names = "onkey-falling", "onkey-rising";
 			power-off-time-sec = <10>;
-//			status = "okay";
+			status = "okay";
 		};
 
 		watchdog {
@@ -522,4 +522,4 @@
 	status = "okay";
 };
 
-//1234567
+//123456789
