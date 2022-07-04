@@ -24,6 +24,7 @@ BR2_LINUX_KERNEL_DTS_SUPPORT=y
 BR2_LINUX_KERNEL_INTREE_DTS_NAME="stm32mp157c-test"
 BR2_LINUX_KERNEL_CUSTOM_DTS_PATH="board/stmicroelectronics/stm32mp157c-test/linux_dts/stm32mp157c-test.dts board/stmicroelectronics/stm32mp157c-test/linux_dts/stm32mp15xx-videodev-pinctrl.dtsi board/stmicroelectronics/stm32mp157c-test/linux_dts/stm32mp15xx-videodev.dtsi"
 BR2_LINUX_KERNEL_INSTALL_TARGET=y
+BR2_PACKAGE_LINUX_TOOLS_GPIO=y
 BR2_PACKAGE_ALSA_UTILS=y
 BR2_PACKAGE_ALSA_UTILS_ALSACONF=y
 BR2_PACKAGE_ALSA_UTILS_AMIXER=y

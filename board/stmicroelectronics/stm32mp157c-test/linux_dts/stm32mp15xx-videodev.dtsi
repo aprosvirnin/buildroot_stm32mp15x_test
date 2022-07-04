@@ -6,6 +6,11 @@
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/mfd/st,stpmic1.h>
+//
+#include "stm32mp15xxac-pinctrl.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
+//
+#include "stm32mp15xx-videodev-pinctrl.dtsi"
 
 / {
 	memory@c0000000 {
@@ -57,16 +62,6 @@
 		gpu_reserved: gpu@d4000000 {
 			reg = <0xd4000000 0x4000000>;
 			no-map;
-		};
-	};
-
-	led {
-		compatible = "gpio-leds";
-		led-blue {
-			label = "heartbeat";
-			gpios = <&gpioa 13 GPIO_ACTIVE_LOW>;
-			linux,default-trigger = "heartbeat";
-			default-state = "on";
 		};
 	};
 
@@ -316,22 +311,6 @@
 	status = "okay";
 };
 
-&ltdc {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&ltdc_pins_a>;
-	pinctrl-1 = <&ltdc_sleep_pins_a>;
-	status = "okay";
-
-	port {
-		ltdc_ep0_out: endpoint@0 {
-			reg = <0>;
-
-			//fen-D
-//			remote-endpoint = <&sii9022_in>;
-		};
-	};
-};
-
 &m4_rproc {
 	memory-region = <&retram>, <&mcuram>, <&mcuram2>, <&vdev0vring0>,
 			<&vdev0vring1>, <&vdev0buffer>;
@@ -479,7 +458,7 @@
 	pinctrl-0 = <&uart7_pins_d>;
 	pinctrl-1 = <&uart7_sleep_pins_d>;
 	pinctrl-2 = <&uart7_idle_pins_d>;
-	status = "okay";
+	status = "disabled";
 };
 
 &usbh_ehci {
@@ -522,4 +501,4 @@
 	status = "okay";
 };
 
-//123456789
+//1234567890

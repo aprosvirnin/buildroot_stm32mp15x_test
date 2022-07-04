@@ -8,10 +8,9 @@
 
 #include "stm32mp157.dtsi"
 #include "stm32mp15xc.dtsi"
-//#include "stm32mp15xxac-pinctrl.dtsi"
 #include "stm32mp15-pinctrl.dtsi"
+#include "stm32mp15xxac-pinctrl.dtsi"
 //
-#include "stm32mp15xx-videodev-pinctrl.dtsi"
 #include "stm32mp15xx-videodev.dtsi"
 
 / {
@@ -26,6 +25,26 @@
 	chosen {
 		stdout-path = "serial0:115200n8";
 	};
+
+	led {
+		compatible = "gpio-leds";
+		led-hl1 {
+			label = "hl1";
+			gpios = <&gpioa 13 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "heartbeat";
+			default-state = "on";
+		};
+	};
+
+	led {
+		compatible = "gpio-leds";
+		led-hl2 {
+			label = "hl2";
+			gpios = <&gpiod 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+			linux,default-trigger = "heartbeat";
+			default-state = "on";
+		};
+	};
 };
 
 &cryp1 {
@@ -38,9 +57,12 @@
 	touchscreen: touchscreen@20 {
 		compatible = "synaptics,synaptics_i2c";
 		reg = <0x20>;
-		interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+		interrupts-extended = <&gpioa 10 IRQ_TYPE_EDGE_FALLING>;
 		interrupt-parent = <&gpioa>;
 		interrupt-controller;
+
+		reset-gpios = <&gpiog 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
 		touchscreen-size-x = <1280>;
 		touchscreen-size-y = <768>;
 		status = "okay";
@@ -48,12 +70,19 @@
 
 	dsi_bridge: dsi-bridge@e {
 		compatible = "toshiba,tc358768";
-		reg = <0xe>;
+		reg = <0x0e>;
 
 //		clocks = <&tc358768_refclk>;
-//		clock-names = "refclk";
+		clock-names = "refclk";
 
-//		reset-gpios = <&pcf_display_board 0 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&gpioa 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+		enable-active-high;
+
+		//+++
+		te-gpios = <&gpioc 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+		ctrl-gpios = <&gpiod 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+		dreset-gpios = <&gpiod 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+		pwr-gpios = <&gpiof 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 
 		vddc-supply = <&v1v2_hdmi>;
 		vddmipi-supply = <&v1v2_hdmi>;
@@ -66,7 +95,7 @@
 			port@1 {
 				reg = <1>;
 				rgb_in: endpoint {
-					remote-endpoint = <&ltdc>;
+					remote-endpoint = <&ltdc_ep1_out>;
 					data-lines = <24>;
 				};
 			};
@@ -82,22 +111,22 @@
 };
 
 &ltdc {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&ltdc_pins_a>;
+	pinctrl-1 = <&ltdc_sleep_pins_a>;
+
 	status = "okay";
 
 	port {
-		ltdc_ep0_out: endpoint@0 {
+		ltdc_ep1_out: endpoint@1 {
 			reg = <1>;
-//			remote-endpoint = <&dsi_in>;
+
+			//fen-D
+			remote-endpoint = <&rgb_in>;
 		};
 	};
 };
 
-&uart7 {
-	pinctrl-names = "default", "sleep", "idle";
-	pinctrl-0 = <&uart7_pins_d>;
-	pinctrl-1 = <&uart7_sleep_pins_d>;
-	pinctrl-2 = <&uart7_idle_pins_d>;
-	status = "disabled";
-};
-
 //12345678
+
+
