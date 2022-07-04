@@ -57,7 +57,7 @@
 	touchscreen: touchscreen@20 {
 		compatible = "synaptics,synaptics_i2c";
 		reg = <0x20>;
-		interrupts-extended = <&gpioa 10 IRQ_TYPE_EDGE_FALLING>;
+		interrupts-extended = <&gpioa 8 IRQ_TYPE_EDGE_FALLING>;
 		interrupt-parent = <&gpioa>;
 		interrupt-controller;
 
@@ -76,7 +76,6 @@
 		clock-names = "refclk";
 
 		reset-gpios = <&gpioa 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-		enable-active-high;
 
 		//+++
 		te-gpios = <&gpioc 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
