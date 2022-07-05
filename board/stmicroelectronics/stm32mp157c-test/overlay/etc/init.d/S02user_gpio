@@ -1,0 +1,30 @@
+#!/bin/sh
+
+#Video_RST PA10
+gpioset --bias=pull-down gpiochip0 10=0
+
+#V_3V3_EN PF1
+gpioset --bias=pull-up gpiochip5 1=1
+
+#Touch PG0
+gpioset --bias=pull-down gpiochip6 0=0
+#PA8
+gpioset --bias=pull-up gpiochip0 8=1
+#PG0
+gpioset --bias=pull-up gpiochip6 0=1
+
+#Display PD1
+gpioset --bias=pull-down gpiochip3 1=0
+#TE PC7
+##gpioset --bias=pull-up gpiochip2 7=1
+#CTRL PD7
+##gpioset --bias=pull-up gpiochip3 7=1
+#
+gpioset --bias=pull-up gpiochip3 1=1
+
+#Video_RST
+#PF14
+gpioset --bias=pull-up gpiochip5 14=1
+#PA10
+gpioset --bias=pull-up gpiochip0 10=1
+

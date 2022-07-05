@@ -6,6 +6,8 @@
 
 /dts-v1/;
 
+#include <dt-bindings/mfd/st,stpmic1.h>
+//
 #include "stm32mp157.dtsi"
 #include "stm32mp15xc.dtsi"
 #include "stm32mp15-pinctrl.dtsi"
@@ -52,40 +54,195 @@
 };
 
 &i2c4 {
-//	status = "okay";
+	status = "okay";
+
+	pmic: stpmic@33 {
+		compatible = "st,stpmic1";
+		reg = <0x33>;
+		interrupts-extended = <&gpioa 0 IRQ_TYPE_EDGE_FALLING>;
+		interrupt-controller;
+		#interrupt-cells = <2>;
+		status = "okay";
+
+		regulators {
+			compatible = "st,stpmic1-regulators";
+			buck1-supply = <&vin>;
+			buck2-supply = <&vin>;
+			buck3-supply = <&vin>;
+			buck4-supply = <&vin>;
+			ldo1-supply = <&v3v3>;
+			ldo2-supply = <&vin>;
+			ldo3-supply = <&vdd_ddr>;
+			ldo4-supply = <&vin>;
+			ldo5-supply = <&vin>;
+			ldo6-supply = <&v3v3>;
+			vref_ddr-supply = <&vin>;
+			boost-supply = <&vin>;
+			pwr_sw1-supply = <&bst_out>;
+			pwr_sw2-supply = <&bst_out>;
+
+			vddcore: buck1 {
+				regulator-name = "vddcore";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1350000>;
+				regulator-always-on;
+				regulator-initial-mode = <0>;
+				regulator-over-current-protection;
+			};
+
+			vdd_ddr: buck2 {
+				regulator-name = "vdd_ddr";
+				regulator-min-microvolt = <1350000>;
+				regulator-max-microvolt = <1350000>;
+				regulator-always-on;
+				regulator-initial-mode = <0>;
+				regulator-over-current-protection;
+			};
+
+			vdd: buck3 {
+				regulator-name = "vdd";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+				st,mask-reset;
+				regulator-initial-mode = <0>;
+				regulator-over-current-protection;
+			};
+
+			v3v3: buck4 {
+				regulator-name = "v3v3";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+				regulator-over-current-protection;
+				regulator-initial-mode = <0>;
+			};
+
+			v1v8_audio: ldo1 {
+				regulator-name = "v1v8_audio";
+				regulator-min-microvolt = <1800000>;
+				regulator-max-microvolt = <1800000>;
+				regulator-always-on;
+				interrupts = <IT_CURLIM_LDO1 0>;
+			};
+
+			v3v3_hdmi: ldo2 {
+				regulator-name = "v3v3_hdmi";
+				regulator-min-microvolt = <3300000>;
+				regulator-max-microvolt = <3300000>;
+				regulator-always-on;
+				interrupts = <IT_CURLIM_LDO2 0>;
+			};
+
+			vtt_ddr: ldo3 {
+				regulator-name = "vtt_ddr";
+				regulator-min-microvolt = <500000>;
+				regulator-max-microvolt = <750000>;
+				regulator-always-on;
+				regulator-over-current-protection;
+			};
+
+			vdd_usb: ldo4 {
+				regulator-name = "vdd_usb";
+				interrupts = <IT_CURLIM_LDO4 0>;
+			};
+
+			vdda: ldo5 {
+				regulator-name = "vdda";
+				regulator-min-microvolt = <2900000>;
+				regulator-max-microvolt = <2900000>;
+				interrupts = <IT_CURLIM_LDO5 0>;
+				regulator-boot-on;
+			};
+
+			v1v2_hdmi: ldo6 {
+				regulator-name = "v1v2_hdmi";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <1200000>;
+				regulator-always-on;
+				interrupts = <IT_CURLIM_LDO6 0>;
+			};
+
+			vref_ddr: vref_ddr {
+				regulator-name = "vref_ddr";
+				regulator-always-on;
+			};
+
+			bst_out: boost {
+				regulator-name = "bst_out";
+				interrupts = <IT_OCP_BOOST 0>;
+			};
+
+			vbus_otg: pwr_sw1 {
+				regulator-name = "vbus_otg";
+				interrupts = <IT_OCP_OTG 0>;
+			 };
+
+			vbus_sw: pwr_sw2 {
+				regulator-name = "vbus_sw";
+				interrupts = <IT_OCP_SWOUT 0>;
+				regulator-active-discharge = <1>;
+			};
+		};
+
+		onkey {
+			compatible = "st,stpmic1-onkey";
+			interrupts = <IT_PONKEY_F 0>, <IT_PONKEY_R 0>;
+			interrupt-names = "onkey-falling", "onkey-rising";
+			power-off-time-sec = <10>;
+			status = "okay";
+		};
+
+		watchdog {
+			compatible = "st,stpmic1-wdt";
+			status = "disabled";
+		};
+	};
 
 	touchscreen: touchscreen@20 {
+		status = "okay";
+
+		vdd-supply = <&v3v3>;
+		level-supply = <&v1v8_audio>;
+
 		compatible = "synaptics,synaptics_i2c";
 		reg = <0x20>;
 		interrupts-extended = <&gpioa 8 IRQ_TYPE_EDGE_FALLING>;
 		interrupt-parent = <&gpioa>;
 		interrupt-controller;
 
-		reset-gpios = <&gpiog 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+//		reset-gpios = <&gpiog 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
 		touchscreen-size-x = <1280>;
 		touchscreen-size-y = <768>;
-		status = "okay";
 	};
 
 	dsi_bridge: dsi-bridge@e {
-		compatible = "toshiba,tc358768";
-		reg = <0x0e>;
-
-//		clocks = <&tc358768_refclk>;
-		clock-names = "refclk";
-
-		reset-gpios = <&gpioa 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-
-		//+++
-		te-gpios = <&gpioc 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-		ctrl-gpios = <&gpiod 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-		dreset-gpios = <&gpiod 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-		pwr-gpios = <&gpiof 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+		status = "okay";
 
 		vddc-supply = <&v1v2_hdmi>;
-		vddmipi-supply = <&v1v2_hdmi>;
 		vddio-supply = <&v3v3_hdmi>;
+		vddio2-supply = <&v3v3>;
+
+		//display
+		ldisplay-supply = <&v1v8_audio>;
+		pdisplay-supply = <&v3v3>;
+
+		vddmipi-supply = <&v1v2_hdmi>;
+
+		compatible = "toshiba,tc358768";
+		reg = <0xe>;
+
+//		clocks = <&tc358768_refclk>;
+//		clock-names = "refclk";
+
+//		reset-gpios = <&gpioa 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+
+		//+++
+//		te-gpios = <&gpioc 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+//		ctrl-gpios = <&gpiod 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+//		dreset-gpios = <&gpiod 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+//		pwr-gpios = <&gpiof 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 
 		dsi_bridge_ports: ports {
 			#address-cells = <1>;
@@ -126,6 +283,30 @@
 	};
 };
 
-//12345678
+//1234567891
 
+	dsi_bridge: tc358778@e {
+		compatible = "toshiba,tc358778", "toshiba,tc358768";
+		reg = <0xe>;
+		status = "disabled";
 
+		clocks = <&src_clk_x1>;
+		clock-names = "refclk";
+
+		vddc-supply = <&v1_2d>;
+		vddmipi-supply = <&v1_2d>;
+		vddio-supply = <&v3_3d>;
+
+		dsi_bridge_ports: ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@0 {
+				reg = <0>;
+				rgb_in: endpoint {
+					remote-endpoint = <&dpi_out>;
+					data-lines = <24>;
+				};
+			};
+		};
+	};
