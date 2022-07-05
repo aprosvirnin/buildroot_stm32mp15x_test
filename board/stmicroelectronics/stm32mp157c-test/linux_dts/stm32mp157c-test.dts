@@ -259,7 +259,8 @@
 			};
 
 			dsi-panel@0 {
-				compatible = "raydium,rm69052";
+//				compatible = "raydium,rm69052";
+				compatible = "raydium,rm68200";
 				reg = <0x00>;
 
 				pwr-supply = <&v3v3>;
