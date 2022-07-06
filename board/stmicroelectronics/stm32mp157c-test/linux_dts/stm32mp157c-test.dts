@@ -238,14 +238,14 @@
 
 		reset-gpios = <&gpioa 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 
-		dsi_bridge_ports: ports {
+		ports {
 			#address-cells = <1>;
 			#size-cells = <0>;
 
 			port@0 {
 				reg = <0>;
-				rgb_in: endpoint {
-					remote-endpoint = <&ltdc_ep1_out>;
+				dsi_bridge_in: endpoint {
+					remote-endpoint = <&ltdc_ep2_out>;
 					data-lines = <24>;
 				};
 			};
@@ -275,11 +275,7 @@
 			video-mode = <2>;
 
 			port {
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				panel_in: endpoint@0 {
-					reg = <0>;
+				panel_in: endpoint {
 					remote-endpoint = <&dsi_out>;
 					lanes = <0 1 2 3 4>;
 				};
@@ -299,9 +295,10 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
-		ltdc_ep1_out: endpoint@1 {
-			reg = <1>;
-			remote-endpoint = <&rgb_in>;
+		ltdc_ep2_out: endpoint@2 {
+			reg = <2>;
+			data-lines = <24>;
+			remote-endpoint = <&dsi_bridge_in>;
 		};
 	};
 };
